@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns="http://thymeleaf.com">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All blogs</title>
+  <title>ホーム/ブログ一覧</title>
 </head>
 <body>
-  <h1>Spring</h1>
+  <h1>ブログまとめ</h1>
+  <form action="/blogs">
+  <input type="text">
+  </form>
+  <a th:href="@{/mypage}" class="btn">マイページ<a>
+  <a th:href="@{/post}" class="btn">新規投稿<a>
+  <h2>ブログ一覧</h2>
 </body>
 </html>
