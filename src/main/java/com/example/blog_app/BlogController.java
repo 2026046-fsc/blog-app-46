@@ -7,4 +7,6 @@ public class BlogController {
   public String blogs(){
     return "blogs";
   }
+  @PostMapping("/post")
+  
 }
