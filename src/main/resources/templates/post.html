@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns="http://thymeleaf.com">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +7,13 @@
 </head>
 <body>
   <form action="/blogs" method="post">
-    <div>
-    <label for="id">記事番号：<label>
-      <input type="text" name="id" id="id">
-      </div>
       <div>
       <label for="title">タイトル：<label>
       <input type="text" name="title" id="title">
       </div>
       <div>
       <label for="content">内容：<label>
-    <input type="textarea" name="content" id="content">
+    <textarea name="content" id="content" rows="4" cols="40"></textarea>
     </div>
     <button type="submit">投稿</button>
   </form>
