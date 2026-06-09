@@ -8,5 +8,22 @@
 <body>
   <header th:replace="~{fragments/layout :: header}"></header>
   <h1>プロフィール編集</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>番号</th>
+        <th>タイトル</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each ="blog : ${blogs}">
+        <td th:text ="${blog.id}"></td>
+        <td th:text ="${blog.title}"></td>
+        <td th:text ="${#strings.abbreviate(blog.content, 20)}"></td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 </html>

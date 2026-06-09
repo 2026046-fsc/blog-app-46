@@ -32,4 +32,8 @@ public class BlogService {
     blogRepository.save(blog);
   }
 
+  public void delete(Long id){
+    blogRepository.delete(id);
+  }
+
 }

@@ -34,6 +34,12 @@ public class BlogRepository {
         .update();
   }
 
+  public void delete(Long id) {
+    jdbcClient.sql("Delete FROM blogs WHERE id = :id")
+        .param("id", id)
+        .update();
+  }
+
   public Optional<Blog> findById(Long id) {
     return jdbcClient.sql("SELECT id, title, content FROM blogs WHERE id = :id")
         .param("id", id)
