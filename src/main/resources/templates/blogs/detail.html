@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ページ</title>
+</head>
+
+<body>
+  <header th:replace="~{fragments/layout :: header}"></header>
+  <p>タイトル: <span th:text="${blog.title}"></span></p>
+  <p>内容: <span th:text="${blog.content}"></span></p>
+  <a th:href="@{/blogs/{id}/edit(id=${blog.id})}">編集</a>
+</body>
+
+</html>

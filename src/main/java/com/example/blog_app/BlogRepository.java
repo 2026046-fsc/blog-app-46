@@ -15,7 +15,7 @@ public class BlogRepository {
   }
 
   public List<Blog> findAll() {
-    return jdbcClient.sql("SELECT id, title, content FROM blogs")// blogsというテーブルを作る
+    return jdbcClient.sql("SELECT id, title, content FROM blogs")
         .query(Blog.class)
         .list();
   }

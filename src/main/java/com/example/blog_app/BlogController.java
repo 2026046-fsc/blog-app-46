@@ -48,6 +48,21 @@ public class BlogController {
       return "redirect:/blogs";
   }
   
+  @GetMapping("/books/{id}/edit")
+  public String editForm(@PathVariable Long id, Model model) {
+      Optional<Blog> blogOpt = blogService.findById(id);
+      if (blogOpt.isEmpty()) {
+        return "redirect:/blogs";
+      }
+      Blog blog = blogOpt.get();
+
+      BlogForm form = new BlogForm();
+      form.setTitle(blog.getTitle());
+      form.setContent(blog.getContent());
+      model.addAttribute("blogForm", form);
+      model.addAttribute("blogId", id);
+      return "blogs/edit";
+  }
   
   
 

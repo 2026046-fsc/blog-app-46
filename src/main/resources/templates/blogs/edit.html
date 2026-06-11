@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>編集ページ</title>
+</head>
+
+<body>
+  <header th:replace="~{fragments/layout :: header}"></header>
+  <form th:action="@{blogs/{id}(id=${blogId})}" method="post" th:object="${blogForm}">
+    <label for="title">タイトル:</label>
+    <input type="text" th:field="*{title}">
+    <label for="content">内容:</label>
+    <input type="text" th:field="*{content}">
+    <button type="submit">更新する</button>
+  </form>
+</body>
+
+</html>
