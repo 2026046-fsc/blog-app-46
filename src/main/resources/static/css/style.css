@@ -1,73 +1,67 @@
 /* ==========================================
-   1. デザインシステム & 奥行きのある背景
+   1. デザインシステム & 背景（変更なし）
    ========================================== */
 :root {
-  /* 2026年トレンドの流体グラデーション背景ベース */
   --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #d9e2ec 100%);
-  
-  /* グラスモルフィズム（透過・奥行き）のためのガラス設定 */
-  --glass-header: rgba(255, 255, 255, 0.45);
+  --glass-header: rgba(255, 255, 255, 0.5);
   --glass-content: rgba(255, 255, 255, 0.75);
-  --glass-input: rgba(255, 255, 255, 0.5);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-  --glass-border-intense: 1px solid rgba(255, 255, 255, 0.8);
-  
-  /* テキストカラー */
+  --glass-input: rgba(255, 255, 255, 0.6);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.7);
+  --glass-border-intense: 1px solid rgba(255, 255, 255, 0.9);
   --text-main: #1e293b;
   --text-muted: #475569;
-  
-  /* 主役を引き立てる鮮やかなグラデーション（ボタン・アクセント用） */
   --accent-grad: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   --accent-grad-hover: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
-  
-  /* 影のレイヤーを重ねて深い立体感を演出 */
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02);
   --shadow-md: 0 12px 30px rgba(31, 38, 135, 0.04);
   --shadow-lg: 0 20px 40px -15px rgba(31, 38, 135, 0.08);
-  
   --radius-lg: 24px;
-  --radius-md: 14px;
+  --radius-md: 12px;
 }
 
-/* 全体レイアウト：左右の絶妙なバランスを固定 */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: var(--bg-gradient);
-  background-attachment: fixed; /* 背景を固定することで、スクロール時にコンテンツの透け感が際立ちます */
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.6;
   margin: 0;
   padding: 0 40px 80px 40px;
-  max-width: 1100px; /* 左右のバランスが最も美しく引き締まる幅 */
+  max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
   -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================
-   2. 共通ヘッダー（存在感は残しつつ色は控えめ）
+   2. 共通ヘッダー（パーツの高さを40pxに完全統一）
    ========================================== */
 header {
   display: flex;
-  align-items: center;
+  align-items: center;      /* 縦方向の中央揃え */
   justify-content: space-between;
-  gap: 24px;
-  padding: 16px 28px;
+  gap: 16px;
+  padding: 16px 32px;
   margin-top: 30px;
   margin-bottom: 50px;
   
-  /* 背景を極力薄く透過させ、ぼかし(blur)で存在感を出す */
   background: var(--glass-header);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: var(--glass-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
 }
 
-header h1 {
+/* ヘッダー内の要素がすべて縦中央に揃うお守り */
+header > * {
+  display: flex;
+  align-items: center;
   margin: 0;
-  font-size: 20px;
+}
+
+header h1 {
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: -0.5px;
 }
@@ -75,84 +69,104 @@ header h1 {
 header h1 a {
   color: var(--text-main);
   text-decoration: none;
-  opacity: 0.8;
-  transition: opacity 0.2s;
+  opacity: 0.85;
 }
 
-header h1 a:hover {
-  opacity: 1;
-}
-
-/* 検索フォーム */
+/* 検索フォームの横並び調整 */
 header form {
   display: flex;
+  align-items: center;
   gap: 8px;
   flex-grow: 1;
   max-width: 380px;
 }
 
+/* 入力欄とボタンの高さを「40px」に固定して揃える */
 header input[type="text"] {
+  height: 40px;
+  box-sizing: border-box;
   flex-grow: 1;
-  padding: 10px 14px;
+  padding: 0 16px;
   border: var(--glass-border);
   border-radius: 10px;
   font-size: 14px;
   background: var(--glass-input);
+  color: var(--text-main);
   transition: all 0.2s;
+  margin: 0;
 }
 
 header input[type="text"]:focus {
   outline: none;
   background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  border-color: rgba(79, 70, 229, 0.4);
 }
 
-header button {
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.4);
+/* 検索ボタン：干渉を完全にリセットし、色を控えめに */
+header button[type="submit"] {
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.6);
   color: var(--text-muted);
   border: var(--glass-border);
   border-radius: 10px;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
   transition: all 0.2s;
+  /* メインフォームのスタイルを上書きリセット */
+  width: auto;
+  margin: 0;
+  box-shadow: none;
+  transform: none;
 }
 
-header button:hover {
-  background: rgba(255, 255, 255, 0.85);
+header button[type="submit"]:hover {
+  background: rgba(255, 255, 255, 0.9);
   color: var(--text-main);
+  box-shadow: none;
+  transform: none;
 }
 
-/* ナビゲーションボタン */
+/* ナビゲーションボタン（マイページ・新規投稿） */
 header .btn {
-  padding: 10px 18px;
-  background: rgba(255, 255, 255, 0.4);
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.6);
   color: var(--text-muted);
   border: var(--glass-border);
   border-radius: 10px;
   text-decoration: none;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
   transition: all 0.2s;
 }
 
 header .btn:hover {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--text-main);
 }
 
-/* 「新規投稿」だけほんのりグラデーションのニュアンスをプラス */
+/* 新規投稿ボタン：色を控えめにしつつ、文字色で上品に区別 */
 header .btn[href*="post"] {
-  background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
-  border: 1px solid rgba(79, 70, 229, 0.2);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(79, 70, 229, 0.25);
   color: #4f46e5;
 }
 
 header .btn[href*="post"]:hover {
-  background: var(--accent-grad);
-  color: white;
-  border-color: transparent;
+  background: rgba(79, 70, 229, 0.05);
+  border-color: #4f46e5;
 }
 
 /* ==========================================
@@ -163,24 +177,19 @@ h1:not(header h1), h2 {
   font-weight: 800;
   margin-bottom: 24px;
   letter-spacing: -0.5px;
-  padding-left: 4px;
 }
 
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  
-  /* 強めの白透過と深いシャドウで、一番上のレイヤーに浮かせます */
   background: var(--glass-content);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: var(--glass-border-intense);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  
   overflow: hidden;
-  margin-top: 20px;
 }
 
 th, td {
@@ -189,7 +198,7 @@ th, td {
 }
 
 th {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.4);
   color: var(--text-muted);
   font-weight: 700;
   font-size: 13px;
@@ -207,7 +216,6 @@ tr:last-child td {
   border-bottom: none;
 }
 
-/* 行ホバー時にフワッと浮き上がり、リンクへ視線を誘導 */
 tr:hover td {
   background: rgba(255, 255, 255, 0.4);
 }
@@ -222,13 +230,12 @@ td a {
 
 tr:hover td a {
   color: #4f46e5;
-  transform: translateX(4px); /* 横にスライドして奥行きを強調 */
+  transform: translateX(4px);
 }
 
 /* ==========================================
-   4. 主役：フォーム（投稿・編集）
+   4. 主役：フォーム（セレクタを限定してヘッダーへの干渉を防止）
    ========================================== */
-/* 編集と投稿フォームの横幅を揃え、中央にドシッと配置（左右バランス） */
 body > div:has(form),
 form:not(header form) {
   max-width: 640px;
@@ -249,19 +256,16 @@ form div {
   margin-bottom: 26px;
 }
 
-form label {
+form label, form > label {
   display: block;
   margin-bottom: 8px;
   font-weight: 700;
   font-size: 14px;
   color: var(--text-muted);
-  letter-spacing: 0.3px;
 }
 
-/* edit.html用の直下labelの調整 */
 form > label {
   margin-top: 24px;
-  display: block;
 }
 
 form input[type="text"], 
@@ -284,11 +288,11 @@ form textarea:focus {
   border-color: #7c3aed;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 12px 24px -6px rgba(124, 58, 237, 0.15);
-  transform: translateY(-2px); /* 入力時に手前に浮き出るエフェクト */
+  transform: translateY(-2px);
 }
 
-/* 力強さと高級感のある鮮やかグラデーションボタン */
-form button[type="submit"] {
+/* フォームの送信ボタンのみにグラデーションを限定 */
+form:not(header form) button[type="submit"] {
   display: block;
   width: 100%;
   padding: 16px;
@@ -304,7 +308,7 @@ form button[type="submit"] {
   margin-top: 36px;
 }
 
-form button[type="submit"]:hover {
+form:not(header form) button[type="submit"]:hover {
   background: var(--accent-grad-hover);
   transform: translateY(-3px);
   box-shadow: 0 15px 26px -5px rgba(79, 70, 229, 0.6);
@@ -313,7 +317,6 @@ form button[type="submit"]:hover {
 /* ==========================================
    5. 主役：詳細ページ（detail.html）
    ========================================== */
-/* 3つのむき出しのpタグを、1枚ずつの美しいカード状に独立させて並べる */
 body > p:has(span) {
   background: var(--glass-content);
   backdrop-filter: blur(20px);
@@ -325,10 +328,9 @@ body > p:has(span) {
   font-size: 15px;
   display: flex;
   gap: 12px;
-  color: transparent; /* 元の「名前: 」などのテキストをスマートに隠蔽 */
+  color: transparent;
 }
 
-/* 擬似要素を使い、英語のラベルで奥行きあるデザインに変貌させます */
 body > p:has(span)::before {
   font-weight: 800;
   color: #4f46e5;
@@ -336,7 +338,7 @@ body > p:has(span)::before {
   font-size: 13px;
   letter-spacing: 0.5px;
 }
-body > p:nth-of-type(1)::before { content: "NAME"; }
+body > p:nth-of-type(1)::before { content: "AUTHOR"; }
 body > p:nth-of-type(2)::before { content: "TITLE"; }
 body > p:nth-of-type(3)::before { content: "CONTENT"; }
 
@@ -345,7 +347,6 @@ body > p span {
   font-weight: 500;
 }
 
-/* 「内容」のカードだけさらに立体感を強く、広範囲に */
 body > p:nth-of-type(3) {
   padding: 32px 28px;
   min-height: 140px;
@@ -353,7 +354,6 @@ body > p:nth-of-type(3) {
   box-shadow: var(--shadow-lg);
 }
 
-/* 詳細ページのボタンまわりのレイアウト調整 */
 body > a[href*="edit"],
 body > form[action*="delete"] button {
   display: inline-flex;
