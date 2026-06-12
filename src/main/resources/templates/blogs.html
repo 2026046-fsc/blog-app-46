@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ホーム/ブログ一覧</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -22,6 +23,7 @@
     <thead>
       <tr>
         <th>番号</th>
+        <th>名前</th>
         <th>タイトル</th>
         <th>内容</th>
       </tr>
@@ -29,6 +31,7 @@
     <tbody>
       <tr th:each="blog : ${blogs}">
         <td> <a th:href="@{/blogs/{id}(id=${blog.id})}" th:text="${blog.id}"></td>
+        <td> <a th:href="@{/blogs/{id}(id=${blog.id})}" th:text="${blog.user_name}"></td>
         <td> <a th:href="@{/blogs/{id}(id=${blog.id})}" th:text="${blog.title}"></td>
         <td> <a th:href="@{/blogs/{id}(id=${blog.id})}" th:text="${#strings.abbreviate(blog.content, 20)}"></td>
     </tbody>

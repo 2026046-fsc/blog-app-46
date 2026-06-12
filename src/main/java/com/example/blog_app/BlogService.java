@@ -33,7 +33,11 @@ public class BlogService {
   }
 
   public void delete(Long id){
-    blogRepository.delete(id);
+    blogRepository.deleteById(id);
+  }
+
+  public void update(Long id, BlogForm form){
+    blogRepository.update(id, form.getUser_name(), form.getTitle(), form.getContent());
   }
 
 }

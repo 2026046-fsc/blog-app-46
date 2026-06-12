@@ -15,20 +15,21 @@ public class BlogRepository {
   }
 
   public List<Blog> findAll() {
-    return jdbcClient.sql("SELECT id, title, content FROM blogs")
+    return jdbcClient.sql("SELECT id, user_name, title, content FROM blogs")
         .query(Blog.class)
         .list();
   }
 
   public List<Blog> searchByTitle(String keyword) {
-    return jdbcClient.sql("SELECT id, title, content FROM blogs WHERE title LIKE = :keyword")
+    return jdbcClient.sql("SELECT id, user_name,  title, content FROM blogs WHERE title LIKE :keyword")
         .param("keyword", "%" + keyword + "%")
         .query(Blog.class)
         .list();
   }
 
   public void save(Blog blog) {
-    jdbcClient.sql("INSERT INTO blogs (title, content) VALUES (:title, :content)")
+    jdbcClient.sql("INSERT INTO blogs (user_name, title, content) VALUES (:user_name, :title, :content)")
+        .param("user_name", blog.getUser_name())
         .param("title", blog.getTitle())
         .param("content", blog.getContent())
         .update();
@@ -41,10 +42,25 @@ public class BlogRepository {
   }
 
   public Optional<Blog> findById(Long id) {
-    return jdbcClient.sql("SELECT id, title, content FROM blogs WHERE id = :id")
+    return jdbcClient.sql("SELECT id, user_name, title, content FROM blogs WHERE id = :id")
         .param("id", id)
         .query(Blog.class)
         .optional();
+  }
+
+  public void update(Long id,String user_name, String title, String content) {
+    jdbcClient.sql("UPDATE blogs SET user_name = :user_name, title = :title, content = :content WHERE id = :id")
+        .param("user_name", user_name)
+        .param("title", title)
+        .param("content", content)
+        .param("id", id)
+        .update();
+  }
+
+  public void deleteById(Long id){
+    jdbcClient.sql("DELETE FROM blogs WHERE id = :id")
+        .param("id", id)
+        .update();
   }
 
 }

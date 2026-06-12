@@ -1,7 +1,398 @@
-.btn {
-  border-radius: 5px;
-  background-color: lightblue;
-  padding: 10px;
+/* ==========================================
+   1. デザインシステム & 奥行きのある背景
+   ========================================== */
+:root {
+  /* 2026年トレンドの流体グラデーション背景ベース */
+  --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #d9e2ec 100%);
+  
+  /* グラスモルフィズム（透過・奥行き）のためのガラス設定 */
+  --glass-header: rgba(255, 255, 255, 0.45);
+  --glass-content: rgba(255, 255, 255, 0.75);
+  --glass-input: rgba(255, 255, 255, 0.5);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+  --glass-border-intense: 1px solid rgba(255, 255, 255, 0.8);
+  
+  /* テキストカラー */
+  --text-main: #1e293b;
+  --text-muted: #475569;
+  
+  /* 主役を引き立てる鮮やかなグラデーション（ボタン・アクセント用） */
+  --accent-grad: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --accent-grad-hover: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+  
+  /* 影のレイヤーを重ねて深い立体感を演出 */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 12px 30px rgba(31, 38, 135, 0.04);
+  --shadow-lg: 0 20px 40px -15px rgba(31, 38, 135, 0.08);
+  
+  --radius-lg: 24px;
+  --radius-md: 14px;
+}
+
+/* 全体レイアウト：左右の絶妙なバランスを固定 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed; /* 背景を固定することで、スクロール時にコンテンツの透け感が際立ちます */
+  color: var(--text-main);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0 40px 80px 40px;
+  max-width: 1100px; /* 左右のバランスが最も美しく引き締まる幅 */
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================
+   2. 共通ヘッダー（存在感は残しつつ色は控えめ）
+   ========================================== */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 28px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  
+  /* 背景を極力薄く透過させ、ぼかし(blur)で存在感を出す */
+  background: var(--glass-header);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+header h1 a {
+  color: var(--text-main);
   text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+header h1 a:hover {
+  opacity: 1;
+}
+
+/* 検索フォーム */
+header form {
+  display: flex;
+  gap: 8px;
+  flex-grow: 1;
+  max-width: 380px;
+}
+
+header input[type="text"] {
+  flex-grow: 1;
+  padding: 10px 14px;
+  border: var(--glass-border);
+  border-radius: 10px;
+  font-size: 14px;
+  background: var(--glass-input);
+  transition: all 0.2s;
+}
+
+header input[type="text"]:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+header button {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--text-muted);
+  border: var(--glass-border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+header button:hover {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text-main);
+}
+
+/* ナビゲーションボタン */
+header .btn {
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--text-muted);
+  border: var(--glass-border);
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+header .btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text-main);
+}
+
+/* 「新規投稿」だけほんのりグラデーションのニュアンスをプラス */
+header .btn[href*="post"] {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  color: #4f46e5;
+}
+
+header .btn[href*="post"]:hover {
+  background: var(--accent-grad);
   color: white;
+  border-color: transparent;
+}
+
+/* ==========================================
+   3. 主役：テーブル（一覧・マイページ）
+   ========================================== */
+h1:not(header h1), h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+  padding-left: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  
+  /* 強めの白透過と深いシャドウで、一番上のレイヤーに浮かせます */
+  background: var(--glass-content);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: var(--glass-border-intense);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 18px 24px;
+  text-align: left;
+}
+
+th {
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  font-size: 15px;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* 行ホバー時にフワッと浮き上がり、リンクへ視線を誘導 */
+tr:hover td {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+td a {
+  color: var(--text-main);
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+tr:hover td a {
+  color: #4f46e5;
+  transform: translateX(4px); /* 横にスライドして奥行きを強調 */
+}
+
+/* ==========================================
+   4. 主役：フォーム（投稿・編集）
+   ========================================== */
+/* 編集と投稿フォームの横幅を揃え、中央にドシッと配置（左右バランス） */
+body > div:has(form),
+form:not(header form) {
+  max-width: 640px;
+  margin: 40px auto 0 auto;
+}
+
+form:not(header form) {
+  background: var(--glass-content);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: var(--glass-border-intense);
+  padding: 45px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+form div {
+  margin-bottom: 26px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+
+/* edit.html用の直下labelの調整 */
+form > label {
+  margin-top: 24px;
+  display: block;
+}
+
+form input[type="text"], 
+form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  color: var(--text-main);
+}
+
+form input[type="text"]:focus, 
+form textarea:focus {
+  outline: none;
+  border-color: #7c3aed;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 24px -6px rgba(124, 58, 237, 0.15);
+  transform: translateY(-2px); /* 入力時に手前に浮き出るエフェクト */
+}
+
+/* 力強さと高級感のある鮮やかグラデーションボタン */
+form button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: var(--accent-grad);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+  transition: all 0.3s ease;
+  margin-top: 36px;
+}
+
+form button[type="submit"]:hover {
+  background: var(--accent-grad-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 26px -5px rgba(79, 70, 229, 0.6);
+}
+
+/* ==========================================
+   5. 主役：詳細ページ（detail.html）
+   ========================================== */
+/* 3つのむき出しのpタグを、1枚ずつの美しいカード状に独立させて並べる */
+body > p:has(span) {
+  background: var(--glass-content);
+  backdrop-filter: blur(20px);
+  border: var(--glass-border-intense);
+  padding: 20px 28px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+  font-size: 15px;
+  display: flex;
+  gap: 12px;
+  color: transparent; /* 元の「名前: 」などのテキストをスマートに隠蔽 */
+}
+
+/* 擬似要素を使い、英語のラベルで奥行きあるデザインに変貌させます */
+body > p:has(span)::before {
+  font-weight: 800;
+  color: #4f46e5;
+  min-width: 90px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+body > p:nth-of-type(1)::before { content: "NAME"; }
+body > p:nth-of-type(2)::before { content: "TITLE"; }
+body > p:nth-of-type(3)::before { content: "CONTENT"; }
+
+body > p span {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+/* 「内容」のカードだけさらに立体感を強く、広範囲に */
+body > p:nth-of-type(3) {
+  padding: 32px 28px;
+  min-height: 140px;
+  white-space: pre-wrap;
+  box-shadow: var(--shadow-lg);
+}
+
+/* 詳細ページのボタンまわりのレイアウト調整 */
+body > a[href*="edit"],
+body > form[action*="delete"] button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+body > a[href*="edit"] {
+  background: var(--text-main);
+  color: white;
+  margin-top: 20px;
+  margin-right: 12px;
+}
+
+body > a[href*="edit"]:hover {
+  background: #0f172a;
+  transform: translateY(-2px);
+}
+
+body > form[action*="delete"] {
+  display: inline;
+}
+
+body > form[action*="delete"] button {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+body > form[action*="delete"] button:hover {
+  background: #ef4444;
+  color: white;
+  border-color: transparent;
+  transform: translateY(-2px);
 }

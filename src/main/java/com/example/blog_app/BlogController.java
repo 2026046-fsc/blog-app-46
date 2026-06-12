@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+
+
 @Controller
 public class BlogController {
   private final BlogService blogService;
@@ -39,8 +41,9 @@ public class BlogController {
       return "post";
   }
   @GetMapping("mypage")
-  public String mypage() {
-      return "mypage";
+  public String mypage(@RequestParam(required = false) String keyword, Model model) {
+    model.addAttribute("mypage", blogService.search(keyword));
+    return "mypage";
   }
   @PostMapping("/blogs")
   public String create(@ModelAttribute Blog blog) {
@@ -48,7 +51,7 @@ public class BlogController {
       return "redirect:/blogs";
   }
   
-  @GetMapping("/books/{id}/edit")
+  @GetMapping("/blogs/{id}/edit")
   public String editForm(@PathVariable Long id, Model model) {
       Optional<Blog> blogOpt = blogService.findById(id);
       if (blogOpt.isEmpty()) {
@@ -57,11 +60,24 @@ public class BlogController {
       Blog blog = blogOpt.get();
 
       BlogForm form = new BlogForm();
+      form.setUser_name(blog.getUser_name());
       form.setTitle(blog.getTitle());
       form.setContent(blog.getContent());
       model.addAttribute("blogForm", form);
       model.addAttribute("blogId", id);
       return "blogs/edit";
+  }
+  
+  @PostMapping("/blogs/{id}")
+  public String update(@PathVariable Long id, @ModelAttribute BlogForm Form) {
+      blogService.update(id, Form);
+      return "redirect:/blogs";
+  }
+
+  @PostMapping("/blogs/{id}/delete")
+  public String delete(@PathVariable Long id) {
+      blogService.delete(id);
+      return "redirect:/blogs";
   }
   
   

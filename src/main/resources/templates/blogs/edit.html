@@ -5,17 +5,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>編集ページ</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
   <header th:replace="~{fragments/layout :: header}"></header>
-  <form th:action="@{blogs/{id}(id=${blogId})}" method="post" th:object="${blogForm}">
+  <div>
+  <form th:action="@{/blogs/{id}(id=${blogId})}" method="post" th:object="${blogForm}">
+    <label for="user_name">名前:</label>
+    <input type="text" th:field="*{user_name}">
     <label for="title">タイトル:</label>
     <input type="text" th:field="*{title}">
     <label for="content">内容:</label>
     <input type="text" th:field="*{content}">
     <button type="submit">更新する</button>
   </form>
+  </div>
 </body>
 
 </html>

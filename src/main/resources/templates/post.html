@@ -4,10 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>投稿ページ</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header th:replace="~{fragments/layout :: header}"></header>
   <form action="/blogs" method="post">
+    <div>
+      <label for="user_name">名前：<label>
+      <input type="text" name="user_name" id="user_name">
+      </div>
       <div>
       <label for="title">タイトル：<label>
       <input type="text" name="title" id="title">
